@@ -19,7 +19,7 @@ class Bootstrap implements BootstrapInterface
         // Add module URL rules
         $app->getUrlManager()->addRules(
             [
-                $prefix . '<module:likes>/' => '<module>/default/index',
+                $prefix . '<module:likes>/' => '<module>/likes/index',
                 $prefix . '<module:likes>/<controller>/' => '<module>/<controller>',
                 $prefix . '<module:likes>/<controller>/<action>' => '<module>/<controller>/<action>',
                 $prefix . '<module:likes>/<controller>/<action>' => '<module>/<controller>/<action>',
