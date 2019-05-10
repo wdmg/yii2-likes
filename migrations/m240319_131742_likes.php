@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Class m240319_131742_likes
+ * Class m190324_131742_likes
  */
 class m240319_131742_likes extends Migration
 {
