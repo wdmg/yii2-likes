@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190324_131742_likes
+ * Class m240519_230517_likes
  */
-class m240319_131742_likes extends Migration
+class m240519_230517_likes extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,20 +20,18 @@ class m240319_131742_likes extends Migration
 
         $this->createTable('{{%likes}}', [
             'id'=> $this->bigPrimaryKey(20),
-            'user_id' => $this->integer()->null(),
-            'condition' => $this->string(64)->notNull(),
+            'user_id' => $this->integer(),
+            'user_ip' => $this->string(39)->notNull(),
+            'entity_id' => $this->string(32)->notNull(),
+            'target_id' => $this->integer()->null(),
             'is_like' => $this->tinyInteger(1)->null()->defaultValue(0),
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->datetime()->defaultExpression('CURRENT_TIMESTAMP'),
-            'session' => $this->string(32)->notNull(),
-            'is_published' => $this->boolean(),
         ], $tableOptions);
 
-        $this->createIndex('idx_likes_user','{{%likes}}', ['user_id'],false);
-        $this->createIndex('idx_likes_condition','{{%likes}}', ['condition'],false);
+        $this->createIndex('idx_likes_user','{{%likes}}', ['user_id', 'user_ip'],false);
+        $this->createIndex('idx_likes_condition','{{%likes}}', ['entity_id', 'target_id'],false);
         $this->createIndex('idx_likes_like','{{%likes}}', ['is_like'],false);
-        $this->createIndex('idx_likes_session','{{%likes}}', ['session'],false);
-        $this->createIndex('idx_likes_published','{{%likes}}', ['is_published'],false);
 
         // If exist module `Users` set foreign key `user_id` to `users.id`
         if(class_exists('\wdmg\users\models\Users') && isset(Yii::$app->modules['users'])) {
@@ -59,8 +57,6 @@ class m240319_131742_likes extends Migration
         $this->dropIndex('idx_likes_user', '{{%likes}}');
         $this->dropIndex('idx_likes_condition', '{{%likes}}');
         $this->dropIndex('idx_likes_like', '{{%likes}}');
-        $this->dropIndex('idx_likes_session', '{{%likes}}');
-        $this->dropIndex('idx_likes_published', '{{%likes}}');
 
         if(class_exists('\wdmg\users\models\Users') && isset(Yii::$app->modules['users'])) {
             $userTable = \wdmg\users\models\Users::tableName();

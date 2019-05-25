@@ -17,8 +17,9 @@ class LikesSearch extends Likes
     public function rules()
     {
         return [
-            [['id', 'user_id', 'is_like', 'is_published'], 'integer'],
-            [['condition', 'created_at', 'updated_at', 'session'], 'safe'],
+            [['id', 'user_id', 'target_id', 'is_like'], 'integer'],
+            [['user_ip', 'entity_id'], 'string'],
+            [['created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,14 +61,13 @@ class LikesSearch extends Likes
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'user_ip' => $this->user_ip,
+            'entity_id' => $this->entity_id,
+            'target_id' => $this->target_id,
             'is_like' => $this->is_like,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'is_published' => $this->is_published,
         ]);
-
-        $query->andFilterWhere(['like', 'condition', $this->condition])
-            ->andFilterWhere(['like', 'session', $this->session]);
 
         return $dataProvider;
     }

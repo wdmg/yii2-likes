@@ -9,15 +9,16 @@ use Yii;
  *
  * @property int $id
  * @property int $user_id
- * @property string $condition
+ * @property string $user_ip
+ * @property string $entity_id
+ * @property int $target_id
  * @property int $is_like
  * @property string $created_at
  * @property string $updated_at
- * @property string $session
- * @property int $is_published
  *
  * @property Users $user
  */
+
 class Likes extends \yii\db\ActiveRecord
 {
     /**
@@ -34,16 +35,17 @@ class Likes extends \yii\db\ActiveRecord
     public function rules()
     {
         $rules = [
-            [['user_id', 'is_like', 'is_published'], 'integer'],
-            [['condition', 'session'], 'required'],
+            [['user_id', 'target_id', 'is_like'], 'integer'],
+            [['user_ip', 'entity_id', 'target_id'], 'required'],
+            [['user_ip'], 'string', 'max' => 39],
+            [['entity_id'], 'string', 'max' => 32],
             [['created_at', 'updated_at'], 'safe'],
-            [['condition'], 'string', 'max' => 64],
-            [['session'], 'string', 'max' => 32],
         ];
 
-        if(class_exists('\wdmg\users\models\Users') && isset(Yii::$app->modules['users']))
+        if(class_exists('\wdmg\users\models\Users') && isset(Yii::$app->modules['users'])) {
+            $rules[] = [['user_id'], 'required'];
             $rules[] = [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => \wdmg\users\models\Users::className(), 'targetAttribute' => ['user_id' => 'id']];
-
+        }
         return $rules;
     }
 
@@ -55,12 +57,12 @@ class Likes extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app/modules/likes', 'ID'),
             'user_id' => Yii::t('app/modules/likes', 'User ID'),
-            'condition' => Yii::t('app/modules/likes', 'Condition'),
+            'user_ip' => Yii::t('app/modules/likes', 'User IP'),
+            'entity_id' => Yii::t('app/modules/likes', 'Entity'),
+            'target_id' => Yii::t('app/modules/likes', 'Target'),
             'is_like' => Yii::t('app/modules/likes', 'Is Like'),
             'created_at' => Yii::t('app/modules/likes', 'Created At'),
             'updated_at' => Yii::t('app/modules/likes', 'Updated At'),
-            'session' => Yii::t('app/modules/likes', 'Session'),
-            'is_published' => Yii::t('app/modules/likes', 'Is Published'),
         ];
     }
 
@@ -69,6 +71,9 @@ class Likes extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        if(class_exists('\wdmg\users\models\Users') && isset(Yii::$app->modules['users']))
+            return $this->hasOne(\wdmg\users\models\Users::className(), ['id' => 'user_id']);
+        else
+            return null;
     }
 }

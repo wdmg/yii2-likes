@@ -10,6 +10,7 @@ namespace wdmg\likes;
 
 use yii\base\BootstrapInterface;
 use Yii;
+use wdmg\likes\components\Likes;
 
 
 class Bootstrap implements BootstrapInterface
@@ -26,11 +27,30 @@ class Bootstrap implements BootstrapInterface
         $app->getUrlManager()->addRules(
             [
                 $prefix . '<module:likes>/' => '<module>/likes/index',
-                $prefix . '<module:likes>/<controller>/' => '<module>/<controller>',
-                $prefix . '<module:likes>/<controller>/<action>' => '<module>/<controller>/<action>',
-                $prefix . '<module:likes>/<controller>/<action>' => '<module>/<controller>/<action>',
+                $prefix . '<module:likes>/<controller:\w+>/' => '<module>/<controller>',
+                $prefix . '<module:likes>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                [
+                    'pattern' => $prefix . '<module:likes>/',
+                    'route' => '<module>/likes/index',
+                    'suffix' => '',
+                ], [
+                    'pattern' => $prefix . '<module:likes>/<controller:\w+>/',
+                    'route' => '<module>/<controller>',
+                    'suffix' => '',
+                ], [
+                    'pattern' => $prefix . '<module:likes>/<controller:\w+>/<action:\w+>',
+                    'route' => '<module>/<controller>/<action>',
+                    'suffix' => '',
+                ],
             ],
             true
         );
+
+        // Configure options component
+        $app->setComponents([
+            'likes' => [
+                'class' => Likes::className()
+            ]
+        ]);
     }
 }
