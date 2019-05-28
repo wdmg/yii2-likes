@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Likes' => "Лайки"
+    'Likes' => "Лайки",
+    'System of accounting user likes' => "Лайки",
 ];
 
 ?>

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel wdmg\likes\models\LikesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app/modules/likes', 'Likes');
+$this->title = $this->context->module->name;
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
