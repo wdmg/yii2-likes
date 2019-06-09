@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 0.0.9 (2019-06-09)
+ * Added choice param for non interactive mode
+
 ## 0.0.8 (2019-06-07)
  * Module refactoring
 
