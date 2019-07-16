@@ -4,7 +4,7 @@
   "keywords": ["yii2", "yii2-likes", "user likes", "wdmg"],
   "type": "yii2-extension",
   "license": "MIT",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/wdmg/yii2-likes",
   "support": {
     "source": "https://github.com/wdmg/yii2-likes",
@@ -28,6 +28,11 @@
   "autoload": {
     "psr-4": {
       "wdmg\\likes\\": ""
+    }
+  },
+  "extra": {
+    "options": {
+      "routePrefix": "admin"
     }
   }
 }
