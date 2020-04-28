@@ -7,7 +7,7 @@ namespace wdmg\likes\components;
  * Yii2 Likes
  *
  * @category        Component
- * @version         0.0.11
+ * @version         0.0.12
  * @author          Alexsander Vyshnyvetskyy <alex.vyshnyvetskyy@gmail.com>
  * @link            https://github.com/wdmg/yii2-likes
  * @copyright       Copyright (c) 2019 - 2020 W.D.M.Group, Ukraine
