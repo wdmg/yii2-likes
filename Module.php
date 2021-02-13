@@ -90,7 +90,7 @@ class Module extends BaseModule
 
         parent::bootstrap($app);
 
-        // Configure options component
+        // Configure likes component
         $app->setComponents([
             'likes' => [
                 'class' => Likes::class
